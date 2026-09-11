@@ -1,15 +1,37 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>오늘예제</title>
-	</head>
-	<body>
-		<h1>오늘 수업 느낌 좋음</h1>
-		<div>이렇게 시작하자</div>
-		<img src="usagi.png" alt="우사기">
-		<div>우 우나나우나 우나나야하야하</div>
-		<section>날씨가 참 좋네</section>
-	</body>
-</html>
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JS 프로젝트 스튜디오 · 수강생</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f1e9;color:#1e241d;font-family:Arial,"Malgun Gothic",sans-serif}header,main,footer{max-width:1280px;margin:auto;padding-left:28px;padding-right:28px}header{padding-top:52px;padding-bottom:32px;border-bottom:1px solid #c9c9bc}h1{font-size:clamp(42px,7vw,82px);line-height:1;margin:10px 0 20px;letter-spacing:-.06em}.kicker{font-size:12px;font-weight:700;letter-spacing:.2em;color:#657b37}.lead{color:#62685e;line-height:1.7}.tools{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:24px 0}.tools input{width:min(420px,100%);padding:13px 16px;border:1px solid #b8bcad;border-radius:4px;background:#fff;font:inherit}.count{font-size:13px;color:#62685e}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{min-width:0;background:#fff;border:1px solid #d5d7ce;border-radius:8px;overflow:hidden}.top{display:flex;justify-content:space-between;gap:12px;padding:20px}.num{font-size:10px;letter-spacing:.14em;color:#8a9082}.top h2{margin:6px 0 0;font-size:25px;letter-spacing:-.04em}.place{margin:0;font-size:12px;color:#68705f;text-align:right}.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.pic{position:relative;height:190px;background:#dfe3d7;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover}.pic.movie img{object-fit:contain;background:#232720}.tag{position:absolute;top:9px;left:9px;padding:5px 7px;background:#fffffff0;border-radius:3px;font-size:10px}.caption{padding:11px 13px 14px;font-size:13px;line-height:1.35;overflow-wrap:anywhere}.label{display:block;margin-bottom:3px;font-size:10px;color:#7c8375}.singer{margin:0 20px;padding:15px 0;border-top:1px solid #ecece5;font-size:13px}.insta{display:flex;justify-content:space-between;margin:0 20px 20px;padding:12px 13px;border-radius:4px;background:#e9efd9;color:#415c20;text-decoration:none;font-size:12px}.insta:hover{background:#dce8c0}.missing{color:#90958b}.empty{text-align:center;padding:60px;color:#777}footer{margin-top:48px;padding-top:24px;padding-bottom:40px;border-top:1px solid #c9c9bc;color:#747a6d;font-size:11px;line-height:1.7}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:580px){header,main,footer{padding-left:18px;padding-right:18px}.tools{align-items:flex-start;flex-direction:column}.tools input{width:100%}.grid{grid-template-columns:minmax(0,1fr)}.pic{height:210px}}
+</style></head><body>
+<header><div class="kicker">JS PROJECT STUDIO · 2026</div><h1>우리의 취향</h1><p class="lead">좋아하는 한 끼부터 최근 본 이야기까지.<br>함께 프로젝트를 만드는 사람들을 소개합니다.</p></header>
+<main><div class="tools"><span class="count" id="count"></span><input id="search" type="search" placeholder="이름, 음식, 동네, 영화, 가수 검색" aria-label="수강생 검색"></div><section class="grid" id="grid"></section><div class="empty" id="empty" hidden>검색 결과가 없습니다.</div></main>
+<footer>CSV에 작성된 정보만 표시했습니다. 사진은 Unsplash의 검색 기반 참고 이미지이며 실제 작품 포스터와 다를 수 있습니다. 인스타그램은 새 창에서 열립니다.</footer>
+<script>
+const people=[
+['이병학','텐동','평촌','슈퍼 뒤에서 담배 피우는 두 사람','스피츠','lee____bh'],
+['김민지','마라탕','기숙사','오디세이','스파이에어','ljrxmo'],
+['김수정','엄마밥','하계동','스파이더맨','마이 케미컬 로맨스','tnwjd1229'],
+['김예진','쌈밥','수원','오디세이','지소쿠리클럽','yezzzzzzzzzzzin'],
+['김주은','연어초밥','연신내','옵세션','실리카겔','pinking.making'],
+['김채호','계란찜','하계','오디세이','킹누','k_chaeho'],
+['남미경','샌드위치','명일동','슬로우 호시스','Alice Merton','youanialways'],
+['박소영','치킨','기숙사','피아니스트','빅뱅','parksozero'],
+['원유미','샤브샤브','방배동','Spiderman','Alvaro Soler','nv.quynhu'],
+['임영현','','','','',''],
+['임훈정','삼겹살','중계동','오디세이','JAY B','by_seohua'],
+['채영미','통닭','동두천','들쥐','드렁큰타이거','artbadwoman'],
+['최동욱','초밥','하계','오디세이','한로로','ch_dongwook'],
+['카밀라','치즈 가리비','석계','들쥐','한로로','camisald'],
+['한다빈','뇨끼','공릉','릴로와 스티치','Laufey','dabinciii'],
+['호프슈타트 파울','피자','공릉','라스트 에어 벤더','잔나비','dtc_ph'],
+['홍정욱','햄버거','전농동','파라노만','백예린','hongstl_studio'],
+['이서진','연어덮밥','하계','치이카와','나토리','2_seo__jin']];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const img=(term,kind)=>term?`https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=75`:'';
+const foodPics={텐동:'https://images.unsplash.com/photo-1625398407796-82650a8c135f?auto=format&fit=crop&w=700&q=75',마라탕:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=75',엄마밥:'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=700&q=75',쌈밥:'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=700&q=75',연어초밥:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=700&q=75',계란찜:'https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=700&q=75',샌드위치:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=75',치킨:'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=700&q=75',샤브샤브:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=700&q=75',삼겹살:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=75',통닭:'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=700&q=75',초밥:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=700&q=75','치즈 가리비':'https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=700&q=75',뇨끼:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=75',피자:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=75',햄버거:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=75',연어덮밥:'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=75'};
+const moviePic='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=700&q=75';
+function picture(text,type){const src=type==='food'?foodPics[text]:moviePic;return `<div><div class="pic ${type==='movie'?'movie':''}">${src?`<img src="${src}" alt="${esc(text)} 참고 이미지" loading="lazy">`:''}<span class="tag">${type==='food'?'FOOD':'WATCHED'}</span></div><div class="caption"><span class="label">${type==='food'?'좋아하는 음식':'최근 본 영화 · 드라마'}</span>${esc(text||'아직 미작성')}</div></div>`}
+function render(){const q=document.querySelector('#search').value.trim().toLowerCase();const list=people.filter(p=>p.join(' ').toLowerCase().includes(q));document.querySelector('#count').textContent=`수강생 ${list.length}명${q?` · 전체 ${people.length}명 중`:''}`;document.querySelector('#empty').hidden=list.length>0;document.querySelector('#grid').innerHTML=list.map((p,i)=>`<article class="card"><div class="top"><div><span class="num">MEMBER ${String(people.indexOf(p)+1).padStart(2,'0')}</span><h2>${esc(p[0])}</h2></div><p class="place">⌖ ${esc(p[2]||'미작성')}</p></div><div class="photos">${picture(p[1],'food')}${picture(p[3],'movie')}</div><p class="singer"><span class="label">좋아하는 가수</span>${esc(p[4]||'아직 미작성')}</p>${p[5]?`<a class="insta" href="https://www.instagram.com/${encodeURIComponent(p[5])}/" target="_blank" rel="noopener noreferrer"><span>@${esc(p[5])}</span><b>↗</b></a>`:`<div class="insta missing">SNS 미작성</div>`}</article>`).join('')}
+document.querySelector('#search').addEventListener('input',render);render();
+</script></body></html>
